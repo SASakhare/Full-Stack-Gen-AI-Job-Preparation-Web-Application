@@ -36,7 +36,7 @@ async function registerUserController(req, res) {
     })
 
     const token = jwt.sign({
-        id: user.__id,
+        id: user._id,
         username: user.username
     },
         process.env.JWT_SECRET,
@@ -87,7 +87,7 @@ async function loginUserController(req, res) {
 
 
     const token = jwt.sign({
-        id: user.__id,
+        id: user._id,
         username: user.username
     },
         process.env.JWT_SECRET,
@@ -133,9 +133,32 @@ async function logoutUserController(req, res) {
 }
 
 
+/**
+ * @name getMeController
+ * @description get the user info from database
+ * @access Private
+ */
+
+async function getMeController(req, res) {
+
+    const user = await userModel.findById(req.user.id)
+
+
+    res.status(200).json({
+        message: "User details fetched successfully",
+        user: {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+        }
+    })
+}
+
+
 
 module.exports = {
     registerUserController,
     loginUserController,
     logoutUserController,
+    getMeController
 }
