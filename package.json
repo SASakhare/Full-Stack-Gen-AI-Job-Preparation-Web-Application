@@ -1,0 +1,28 @@
+{
+  "name": "genaijobpreperationwebapp",
+  "version": "1.0.0",
+  "description": "gen ai job preperation web app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SASakhare/Full-Stack-Gen-AI-Job-Preparation-Web-Application.git"
+  },
+  "author": "sejal sakhare",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SASakhare/Full-Stack-Gen-AI-Job-Preparation-Web-Application/issues"
+  },
+  "homepage": "https://github.com/SASakhare/Full-Stack-Gen-AI-Job-Preparation-Web-Application#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.5.0"
+  }
+}
