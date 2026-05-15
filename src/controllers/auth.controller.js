@@ -60,7 +60,7 @@ async function registerUserController(req, res) {
 
 
 /**
- * @name registerUserController
+ * @name  loginUserController
  * @description register a new User , expects email and password
  * @access Public
  */
@@ -113,7 +113,7 @@ async function loginUserController(req, res) {
 
 
 /**
- * @name registerUserController
+ * @name logoutUserController
  * @description clear token from user cookie and add the token in blacklist
  * @access Public
  */

@@ -1,0 +1,208 @@
+{
+    "title": "Entry-level Software Developer / Machine Learning Associate",
+    "technicalQuestion": [
+        {
+            "question": "In your Music Mood Predictor project, you used TF-IDF for feature extraction. Can you explain why you chose TF-IDF over simple Bag-of-Words, and how it handles the 'importance' of words across different lyrics?",
+            "intention": "To test the candidate's understanding of Natural Language Processing fundamentals and their ability to justify architectural choices in their projects.",
+            "answer": "Explain that TF-IDF (Term Frequency-Inverse Document Frequency) penalizes words that appear frequently across all documents (like 'the' or 'is') while highlighting words that are unique to specific moods. Mention the mathematical components: TF (local frequency) and IDF (global rarity). Explain that this prevents common stop-words from skewing the mood classification unlike a standard count-based Bag-of-Words approach."
+        },
+        {
+            "question": "Walk me through the flow of data in your Job Preparation AI Web App. How does the MERN stack interact with the Gemini AI API?",
+            "intention": "To evaluate full-stack integration skills and the ability to manage asynchronous API calls in a Node.js environment.",
+            "answer": "Describe the React frontend capturing user input (resume/query) and sending a POST request to the Express/Node.js backend. Explain the use of 'axios' or 'fetch' for the request, the backend's role in securing the Gemini API key, and how the model's response is parsed and stored in MongoDB before being sent back to the React UI for rendering."
+        },
+        {
+            "question": "In your Real-Time Facial Merging application, what OpenCV functions did you use for image processing, and how did you ensure the frame rate remained stable during real-time capture?",
+            "intention": "To check proficiency in Computer Vision and optimization of real-time image processing pipelines.",
+            "answer": "Mention specific functions like cv2.VideoCapture, cv2.bitwise_and/or, or cv2.addWeighted for blending. Discuss optimization techniques such as resizing the input frame to a lower resolution to reduce computation, using efficient loops, and ensuring that facial landmark detection (if used) is not overly complex for the CPU."
+        },
+        {
+            "question": "You list both MongoDB and SQL. When would you prefer MongoDB for a project like your Job Preparation AI app over a traditional Relational Database?",
+            "intention": "To assess database selection knowledge and understanding of data modeling.",
+            "answer": "Explain that MongoDB's document-based structure is ideal for handling varying resume formats or unstructured AI responses where the schema might evolve. Contrast this with SQL's rigid schema, which might be better for highly structured data like user transaction logs or academic records, but less flexible for rapid prototyping of AI features."
+        },
+        {
+            "question": "In Java, what is the difference between an Interface and an Abstract Class, and which one would you use for a multi-platform signal transmission system like your IR project?",
+            "intention": "To test Core Java concepts and object-oriented design thinking.",
+            "answer": "Define Interfaces as contracts for behavior and Abstract Classes as partial implementations. For the IR project, if different hardware modules (IR, Bluetooth, RF) share common logic like 'modulate()', an abstract class might work. However, if they only share a signature but have zero common implementation, an interface is preferred to allow for multiple inheritance/implementations."
+        },
+        {
+            "question": "How did you handle overfitting in your classification models during your internship at ABC Tech Solutions?",
+            "intention": "To evaluate practical Machine Learning knowledge and model tuning skills.",
+            "answer": "Discuss techniques like using a Train-Test split or Cross-Validation to monitor performance. Mention regularization (L1/L2), simplifying the model (reducing the number of features or tree depth in SVM/Decision Trees), or using techniques like Dropout if TensorFlow was involved in those classification tasks."
+        }
+    ],
+    "behavioralQuestion": [
+        {
+            "question": "The job description mentions a collaborative environment. Can you tell me about a time you had to work with a team on a technical project like your Arduino IR project?",
+            "intention": "To assess team collaboration and communication skills.",
+            "answer": "Situation: Building the Wireless Voice Over IR project. Task: I was responsible for the PWM modulation logic while a teammate handled the hardware circuitry. Action: We used GitHub for version control and held daily check-ins to ensure the hardware pinouts matched the software configurations. Result: We successfully transmitted audio signals across the room, and I learned how to document code so my teammate could troubleshoot hardware based on my software logs."
+        },
+        {
+            "question": "Describe a situation where you had to learn a new technology quickly to meet a project deadline. How did you approach it?",
+            "intention": "To test the 'Quick Learning Ability' mentioned in the resume and self-description.",
+            "answer": "Situation: I wanted to add AI features to my Job Preparation app but hadn't used Gemini AI before. Task: Integrate a generative AI model into a MERN stack within two weeks. Action: I spent the first two days reading the official Google documentation and experimenting with API calls in Postman. I then built a small prototype in Node.js before integrating it into the main app. Result: The feature was implemented on time, significantly increasing the app's utility."
+        },
+        {
+            "question": "Tell me about a technical error or bug that frustrated you. How did you resolve it?",
+            "intention": "To evaluate problem-solving persistence and debugging methodology.",
+            "answer": "Situation: In the Facial Merging app, the video stream was lagging significantly. Task: Identify the bottleneck in the OpenCV pipeline. Action: I used time-stamping to measure the execution time of each function. I realized the facial landmark detection was running on high-res frames. Result: I downscaled the frame for detection and upscaled the result for display, improving the FPS from 5 to 24."
+        },
+        {
+            "question": "You have experience in both Web Development and Machine Learning. Which area do you prefer, and why?",
+            "intention": "To understand the candidate's career alignment and passion.",
+            "answer": "Explain that you enjoy the intersection of both. State that Web Development provides the interface for users to interact with technology, while ML provides the 'intelligence.' Emphasize that you are most excited about building 'Intelligent Applications' like your Job Preparation AI, where full-stack skills are used to deliver AI solutions."
+        },
+        {
+            "question": "How do you prioritize your tasks when you have multiple academic projects and an internship running simultaneously?",
+            "intention": "To assess time management skills mentioned in the resume.",
+            "answer": "Situation: Balancing the final year of B.Tech while interning at ABC Tech Solutions. Task: Delivering a classification model for work while preparing for university exams. Action: I used tools like Trello to track deadlines and allocated specific 'deep work' blocks—mornings for internship tasks and evenings for academic projects. Result: I maintained an 8.5 CGPA while receiving positive feedback from my internship supervisor for timely deliverables."
+        }
+    ],
+    "skillGaps": [
+        {
+            "skill": "Cloud Infrastructure (AWS/Azure/GCP)",
+            "severity": "medium"
+        },
+        {
+            "skill": "Containerization (Docker)",
+            "severity": "medium"
+        },
+        {
+            "skill": "Unit Testing & TDD (Jest/JUnit)",
+            "severity": "low"
+        },
+        {
+            "skill": "CI/CD Pipelines",
+            "severity": "medium"
+        }
+    ],
+    "preparationPlan": [
+        {
+            "day": 1,
+            "focus": "Core Programming Foundations (Java & Python)",
+            "tasks": [
+                "Review Java OOP concepts: Polymorphism, Inheritance, and Interfaces",
+                "Practice Python list comprehensions, decorators, and memory management",
+                "Solve 3 LeetCode easy/medium problems in Java"
+            ]
+        },
+        {
+            "day": 2,
+            "focus": "Data Structures & Algorithms",
+            "tasks": [
+                "Review Arrays, Strings, and HashMaps (common in interview coding)",
+                "Implement a custom Linked List and Binary Search Tree in Python",
+                "Solve 3 medium-level LeetCode problems on Linked Lists"
+            ]
+        },
+        {
+            "day": 3,
+            "focus": "Machine Learning Fundamentals",
+            "tasks": [
+                "Review Mathematics behind Logistic Regression and SVM (used in Music project)",
+                "Brush up on Scikit-learn's 'pipeline' and 'GridSearchCV' for model tuning",
+                "Explain the Bias-Variance tradeoff and Regularization (L1/L2)"
+            ]
+        },
+        {
+            "day": 4,
+            "focus": "Deep Learning & TensorFlow",
+            "tasks": [
+                "Review Neural Network architectures: CNNs for Computer Vision",
+                "Practice building a simple Sequential model in TensorFlow/Keras",
+                "Read about optimizers (Adam, SGD) and loss functions (Cross-entropy)"
+            ]
+        },
+        {
+            "day": 5,
+            "focus": "Computer Vision with OpenCV",
+            "tasks": [
+                "Re-implement facial landmark detection or edge detection in a script",
+                "Review image transformation techniques: Thresholding, Blurring, Contours",
+                "Practice real-time webcam processing optimizations"
+            ]
+        },
+        {
+            "day": 6,
+            "focus": "Frontend Development (React.js)",
+            "tasks": [
+                "Review React Hooks: useState, useEffect, and useMemo",
+                "Explain State Management: Context API vs Redux basics",
+                "Build a small component that fetches data from a public API"
+            ]
+        },
+        {
+            "day": 7,
+            "focus": "Backend Development (Node.js & Express)",
+            "tasks": [
+                "Study the Node.js Event Loop and Non-blocking I/O",
+                "Practice writing middleware for authentication and error handling",
+                "Review RESTful API design principles"
+            ]
+        },
+        {
+            "day": 8,
+            "focus": "Databases (SQL & NoSQL)",
+            "tasks": [
+                "Write complex SQL queries involving JOINs and Subqueries",
+                "Review MongoDB indexing and aggregation frameworks",
+                "Compare ACID vs BASE properties"
+            ]
+        },
+        {
+            "day": 9,
+            "focus": "System Design Basics",
+            "tasks": [
+                "Study Load Balancers, Caching (Redis), and Scalability (Horizontal vs Vertical)",
+                "Sketch the architecture of your 'Job Prep AI Web App'",
+                "Learn about Rate Limiting for API protection"
+            ]
+        },
+        {
+            "day": 10,
+            "focus": "Gap Bridging (Docker & Cloud)",
+            "tasks": [
+                "Write a Dockerfile for your MERN stack application",
+                "Understand basic AWS services: EC2, S3, and Lambda",
+                "Learn the basics of CI/CD and why it's used in collaborative teams"
+            ]
+        },
+        {
+            "day": 11,
+            "focus": "Project Deep Dive & Technical Walkthrough",
+            "tasks": [
+                "Prepare a 2-minute elevator pitch for each project in your resume",
+                "Review code snippets from your 'Music Mood Predictor'",
+                "Identify 3 areas of improvement for your AI Web App"
+            ]
+        },
+        {
+            "day": 12,
+            "focus": "Behavioral Interview Prep (STAR Method)",
+            "tasks": [
+                "Draft 5 STAR stories focusing on teamwork, conflict, and learning",
+                "Practice 'Tell me about yourself' focusing on your interest in AI/Dev",
+                "Record yourself answering behavioral questions to check body language"
+            ]
+        },
+        {
+            "day": 13,
+            "focus": "Advanced Coding Practice & Logic",
+            "tasks": [
+                "Solve 2 hard-level problems on dynamic programming or graphs",
+                "Review bit manipulation (useful for IR signal projects)",
+                "Mock coding session: Solve a random problem under a 30-minute timer"
+            ]
+        },
+        {
+            "day": 14,
+            "focus": "Mock Interview & Final Review",
+            "tasks": [
+                "Conduct a full 1-hour mock interview with a peer or online tool",
+                "Do a final light review of your 'Technical Skills' list",
+                "Rest early and ensure your environment/stable internet for the real interview"
+            ]
+        }
+    ]
+}
