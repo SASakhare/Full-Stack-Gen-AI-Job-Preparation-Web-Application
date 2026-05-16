@@ -1,7 +1,7 @@
-const express=require("express")
-const authMiddleware=require("../middlewares/auth.middlewares")
-const interviewController=require("../controllers/interview.controller")
-const interviewRouter=express.Router()
+const express = require("express")
+const authMiddleware = require("../middlewares/auth.middlewares")
+const interviewController = require("../controllers/interview.controller")
+const interviewRouter = express.Router()
 const upload = require("../middlewares/file.middlewares")
 
 
@@ -11,7 +11,7 @@ const upload = require("../middlewares/file.middlewares")
  * @access private
  */
 
-interviewRouter.post("/",authMiddleware.authUser,upload.single("resume"),interviewController.generateInterViewReportController)
+interviewRouter.post("/", authMiddleware.authUser, upload.single("resume"), interviewController.generateInterViewReportController)
 
 
 /**
@@ -20,7 +20,7 @@ interviewRouter.post("/",authMiddleware.authUser,upload.single("resume"),intervi
  * @access private
  */
 
-interviewRouter.get("/report/:interviewId",authMiddleware.authUser,interviewController.getInterViewReportByIdController)
+interviewRouter.get("/report/:interviewId", authMiddleware.authUser, interviewController.getInterViewReportByIdController)
 
 
 /**
@@ -29,7 +29,18 @@ interviewRouter.get("/report/:interviewId",authMiddleware.authUser,interviewCont
  * @access private
  */
 
-interviewRouter.get("/",authMiddleware.authUser,interviewController.getAllInterViewReportController)
+interviewRouter.get("/", authMiddleware.authUser, interviewController.getAllInterViewReportController)
+
+
+
+
+/**
+ * @route GET /api/interview/resume/pdf
+ * @description generate resume pdf on the basis of user self description, resume content and job description.
+ * @access private
+ */
+
+interviewRouter.get("/resume/pdf/:interviewReportId", authMiddleware.authUser, interviewController.generateResumePDFController)
 
 
 

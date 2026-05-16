@@ -2,6 +2,11 @@ const { GoogleGenAI } = require("@google/genai");
 const { z } = require('zod');
 const { zodToJsonSchema } = require("zod-to-json-schema");
 
+const puppeteer = require('puppeteer-core')
+const chromium = require("@sparticuz/chromium");
+const isProduction = process.env.NODE_ENV === "production";
+
+
 const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY,
 });
@@ -289,4 +294,320 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
     return result;
 }
 
-module.exports = generateInterviewReport;
+
+
+
+
+async function generatePDFFromHTML(htmlContent) {
+
+    const browser = await puppeteer.launch(
+        isProduction
+            ? {
+                args: chromium.args,
+                defaultViewport: chromium.defaultViewport,
+                executablePath: await chromium.executablePath(),
+                headless: chromium.headless,
+            }
+            : {
+                executablePath:
+                    "C:/Program Files/Google/Chrome/Application/chrome.exe",
+                headless: true,
+            }
+    );
+
+    const page = await browser.newPage();
+
+    await page.setContent(htmlContent, {
+        waitUntil: "networkidle0",
+    });
+
+    const pdfBuffer = await page.pdf({
+        format: "A4",
+        printBackground: true,
+        margin: {
+            top: "20px",
+            right: "20px",
+            bottom: "20px",
+            left: "20px",
+        },
+    });
+
+    await browser.close();
+
+    return pdfBuffer
+}
+
+
+async function generateResumePDF({ resume, selfDescription, jobDescription }) {
+
+    const resumepdfSchema = z.object({
+        html: z.string().describe("The HTML content of the resume which can be converted to PDF using library puppeteer-core and sparticuz/chromium")
+    })
+
+    const prompt = `
+    Generate a highly professional, ATS-friendly, recruiter-optimized resume for the candidate using the following details:
+
+    Candidate Resume Information:
+    ${resume}
+
+    Self Description:
+    ${selfDescription}
+
+    Target Job Description:
+    ${jobDescription}
+
+    IMPORTANT OBJECTIVE:
+    The goal is to create a premium-quality resume that maximizes the candidate’s chances of getting shortlisted for interviews by aligning strongly with the target job description while remaining realistic, professional, and human-written.
+
+    The generated output must be specifically designed for PDF generation using:
+    - puppeteer-core
+    - @sparticuz/chromium
+
+    This means the HTML must be production-ready for browser-based PDF rendering.
+
+    ==================================================
+    STRICT REQUIREMENTS
+    ==================================================
+
+    1. RESPONSE FORMAT
+
+    Return ONLY a valid JSON object with exactly one field:
+
+    {
+    "html": "complete HTML content here"
+    }
+
+    Do not return markdown.
+    Do not use code blocks.
+    Do not add explanations outside JSON.
+    Do not add extra fields.
+
+    ==================================================
+    2. HTML REQUIREMENTS (VERY IMPORTANT)
+    ==================================================
+
+    The "html" field must contain COMPLETE clean HTML that can be directly rendered and converted to PDF using:
+
+    - puppeteer-core
+    - @sparticuz/chromium
+
+    The HTML must include:
+
+    - full HTML structure
+    - <!DOCTYPE html>
+    - <html>
+    - <head>
+    - <body>
+    - proper inline CSS only
+    - professional typography
+    - print-safe formatting
+    - A4 PDF friendly layout
+    - consistent spacing
+    - clean hierarchy
+    - visually polished formatting
+    - proper margins and padding
+    - strong readability
+    - excellent PDF rendering quality
+
+    The HTML should look excellent when exported as PDF.
+
+    Use:
+
+    - inline CSS only
+    - simple professional design
+    - ATS-friendly formatting
+    - print-friendly layout
+    - proper font sizing
+    - clean section separation
+    - balanced white space
+    - strong readability
+
+    Avoid:
+
+    - external CSS files
+    - JavaScript
+    - Tailwind classes
+    - React syntax
+    - complex CSS frameworks
+    - unnecessary graphics
+    - heavy tables
+    - complicated multi-column layouts
+    - excessive icons
+    - overly decorative elements
+    - backgrounds that break PDF rendering
+
+    The design must be elegant, premium, professional, recruiter-friendly, and ATS compatible.
+
+    ==================================================
+    3. RESUME QUALITY REQUIREMENTS
+    ==================================================
+
+    The resume must:
+
+    - be highly tailored to the target job description
+    - prioritize relevant skills and experience
+    - include important keywords from the job description naturally
+    - improve ATS match score significantly
+    - sound human-written, not AI-generated
+    - avoid generic fluff and vague statements
+    - use strong action verbs
+    - show measurable impact where possible
+    - highlight projects with real business/technical value
+    - emphasize achievements over responsibilities
+    - make the candidate look strong but realistic
+
+    The final resume should feel like it was written by an expert recruiter.
+
+    ==================================================
+    4. STRUCTURE TO INCLUDE
+    ==================================================
+
+    Create sections only when relevant:
+
+    - Full Name
+    - Professional Title
+    - Contact Information
+    - Professional Summary
+    - Technical Skills
+    - Work Experience / Internship Experience
+    - Projects
+    - Education
+    - Certifications
+    - Achievements
+    - Leadership / Extracurricular (if valuable)
+    - Publications / Research (if relevant)
+
+    Do not force unnecessary sections.
+
+    Do not include weak filler sections.
+
+    ==================================================
+    5. PROFESSIONAL SUMMARY
+    ==================================================
+
+    Write a strong recruiter-focused summary that is:
+
+    - concise
+    - role-specific
+    - impactful
+    - achievement-oriented
+    - keyword-rich
+    - highly relevant to the target role
+
+    This section must strongly improve shortlist chances.
+
+    This should create a powerful first impression within 6–8 seconds.
+
+    ==================================================
+    6. PROJECTS SECTION
+    ==================================================
+
+    Projects must:
+
+    - align strongly with the target role
+    - highlight technical depth
+    - show measurable outcomes
+    - include tools/technologies used
+    - explain business impact or problem solved
+    - reflect practical industry relevance
+
+    Do not write weak student-style project descriptions.
+
+    Projects should look strong enough for recruiter attention.
+
+    ==================================================
+    7. EXPERIENCE SECTION
+    ==================================================
+
+    Experience must:
+
+    - prioritize relevant achievements
+    - include quantified results when possible
+    - be concise and powerful
+    - look realistic and professional
+    - focus on value delivered
+
+    Avoid generic responsibility-only descriptions.
+
+    ==================================================
+    8. ATS OPTIMIZATION
+    ==================================================
+
+    Ensure:
+
+    - strong keyword matching
+    - recruiter scanning friendliness
+    - clean hierarchy
+    - ATS parser compatibility
+    - strong first impression
+    - high shortlist probability
+
+    The resume should be optimized for both:
+
+    1. ATS systems
+    2. Human recruiters
+
+    ==================================================
+    9. LENGTH
+    ==================================================
+
+    Keep the final resume ideally within:
+
+    1–2 pages maximum when converted to PDF.
+
+    Focus on:
+
+    quality > quantity
+
+    Do not make it too lengthy.
+
+    ==================================================
+    10. FINAL STANDARD
+    ==================================================
+
+    The final resume should look like something created by:
+
+    an experienced recruiter
+    OR
+    a senior career consultant
+    for top-tier companies.
+
+    It should feel:
+
+    premium
+    professional
+    credible
+    strong
+    interview-converting
+
+    The final HTML should be immediately usable for:
+
+    await page.setContent(html)
+    await page.pdf()
+
+    without requiring major cleanup.
+    `;
+
+    const fullSchema = zodToJsonSchema(resumepdfSchema, { target: "openApi3" });
+
+    const response = await ai.models.generateContent({
+        model: "gemini-3-flash-preview",  // ✅ Fix: correct model name
+        contents: prompt,
+        config: {
+            responseFormat: { text: { mimeType: "application/json", schema: fullSchema } },
+        },
+        temperature: 0.2,
+    });
+
+    const jsonContent = JSON.parse(response.text)
+
+    // console.log(jsonContent.html);
+    
+
+    const pdfBuffer = await generatePDFFromHTML(jsonContent.html)
+
+    return pdfBuffer
+}
+
+
+module.exports = { generateInterviewReport, generateResumePDF };
